@@ -70,3 +70,12 @@ Deve-se evitar arquivos que não sejam texto dentro do repositório, como
 imagens, a menos que sejam indispensaveis para a aplicação. Arquivos que
 são gerados pelas aplicações devem ser ignorados no `.gitignore`, como
 os arquivos resultados de uma compilação LaTeX (.aux, .toc, etc).
+
+<!------------------------------------------- -->
+
+[`rpanel`]: https://cran.r-project.org/web/packages/rpanel/index.html
+[`gWidgets`]: https://cran.r-project.org/web/packages/gWidgets/index.html
+[`rgl`]: https://cran.r-project.org/web/packages/rgl/index.html
+[`animation`]: https://cran.r-project.org/web/packages/animation/index.html
+[`googleVis`]: https://cran.r-project.org/web/packages/googleVis/index.html
+[`shiny`]: https://cran.r-project.org/web/packages/shiny/index.html
