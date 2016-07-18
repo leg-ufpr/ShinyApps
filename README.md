@@ -22,6 +22,20 @@ As aplicações aqui mantidas podem ser utilizadas acessando o endereço
 
 <!-- TODO: Criar um usuário geral na servidora do Shiny. -->
 
+Para usar localmente as aplicações você pode ter uma cópia dos
+diretórios. Você pode clonar o repositório (recomendado), baixar o zip
+com todo o conteúdo dele (viável) ou apenas copiar os arquivos da
+aplicação que deseja usar (risco de esqueçer algo). Depois de ter o
+diretório com todos os arquivos, faça em uma sessão R:
+
+```r
+# Carrega o pacote shiny.
+library(shiny)
+
+# Roda a aplicação density.
+runApp("density")
+```
+
 ## Organização
 
 Cada aplicação Shiny neste repositório é um diretório na raiz. Dentro
