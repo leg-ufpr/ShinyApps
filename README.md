@@ -2,12 +2,12 @@
 
 Recursos interativos são uma ferramenta extraordinária para o Ensino de
 qualquer disciplina. Na Estatística, em especial, muitos conceitos podem
-ser transmitos de forma visual por meio de gráficos e animações. No
+ser transmitido de forma visual por meio de gráficos e animações. No
 entanto, tais recursos ainda são pouco explorados apesar das muitas
-funcionalidades que o R tem para a contrução de aplicações que são
+funcionalidades que o R tem para a construção de aplicações que são
 implementações disponíveis em vários pacotes: [`rpanel`], [`gWidgets`],
 [`animation`], [`rgl`], [`googleVis`] e [`shiny`], por exemplo. Dentre
-estes, o `shiny` tem a vatagem de permitir a criação e hospedagem de
+estes, o `shiny` tem a vantagem de permitir a criação e hospedagem de
 aplicações na web, aumentando assim o acesso das pessoas, inclusive
 daqueles que não sabem usar o R.
 
@@ -22,11 +22,31 @@ As aplicações aqui mantidas podem ser utilizadas acessando o endereço
 
 <!-- TODO: Criar um usuário geral na servidora do Shiny. -->
 
-Para usar localmente as aplicações você pode ter uma cópia dos
-diretórios. Você pode clonar o repositório (recomendado), baixar o zip
-com todo o conteúdo dele (viável) ou apenas copiar os arquivos da
-aplicação que deseja usar (risco de esqueçer algo). Depois de ter o
-diretório com todos os arquivos, faça em uma sessão R:
+## Como usar
+
+Você pode usar as aplicações Shiny desse repositório de 3 formas:
+
+  1. Clonando o repositório.
+  2. Baixando um zip do repositório.
+  3. Executando a aplicação a partir do fonte no GitHub.
+
+Na tela inicial do repositório, que exibe este arquivo README, existe um
+botão do lado direito escrito `Clone or download`. Clique nele para
+escolher uma das opções.
+
+Para clonar o repositório você precisa ter o Git instalado. Aí basta
+clonar o projeto com:
+
+```
+# Clonando o repositório.
+git clone https://github.com/leg-ufpr/ShinyApps.git
+```
+
+Caso não queira usar o Git, baixe o zip com o conteúdo do repositório e
+descompacte para ter acesso às aplicações.
+
+Para executar as aplicações da cópia local do repositório (por clone ou
+download) faça em uma sessão R:
 
 ```r
 # Carrega o pacote shiny.
@@ -36,12 +56,31 @@ library(shiny)
 runApp("density")
 ```
 
+Lembre-se de atribuir corretamente o diretório de trabalho para que a
+aplicação seja encontrada pela função. Use `setwd()`. Você pode também
+usar o caminho completo do diretório na aplicação na função `runApp()`.
+
+Por último, caso não queira fazer uma cópia local, você pode executar as
+aplicações a partir do código fonte no GitHub. O fragmento abaixo mostra
+como executar a aplicação `density` sem precisar baixar (diretamente) os
+arquivos.
+
+```r
+# Carrega o pacote shiny.
+library(shiny)
+
+# Roda a aplicação density acessando os fontes no GitHub.
+runGitHub(repo = "ShinyApps",
+          username = "leg-ufpr",
+          subdir = "density/")
+```
+
 ## Organização
 
 Cada aplicação Shiny neste repositório é um diretório na raiz. Dentro
 destes diretório deve existir o par de arquivos `server.R` e `ui.R` ou o
 arquivo `app.Rmd`. Arquivos auxiliares, como `global.R`, ou diretórios,
-como o `www/`, podem ser criados conforme a necessidade das aplições.
+como o `www/`, podem ser criados conforme a necessidade das aplicações.
 
 As definições globais, por outro lado, devem estar no diretório
 `GLOBAL/`, como os arquivos de estilo (`*.css`), cabeçalho
@@ -64,10 +103,10 @@ lint(filename = "server.R",
 ```
 
 Os arquivos neste repositório devem ter codificação UTF-8 (padrão no
-Linux) para não haver problemas de codifição de caracteres.
+Linux) para não haver problemas de codificação de caracteres.
 
 Deve-se evitar arquivos que não sejam texto dentro do repositório, como
-imagens, a menos que sejam indispensaveis para a aplicação. Arquivos que
+imagens, a menos que sejam indispensáveis para a aplicação. Arquivos que
 são gerados pelas aplicações devem ser ignorados no `.gitignore`, como
 os arquivos resultados de uma compilação LaTeX (.aux, .toc, etc).
 
