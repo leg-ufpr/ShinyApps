@@ -19,3 +19,8 @@ img {
     display: block;
     margin: auto;
 }
+
+table.data td[align=right] {
+  font-family: inherit !important;
+  text-align: right;
+}
