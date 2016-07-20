@@ -96,10 +96,16 @@ seguinte:
 library(lintr)
 
 lint(filename = "ui.R",
-     linters = with_defaults(commented_code_linter = NULL))
+     linters = with_defaults(commented_code_linter = NULL,
+                             line_length_linter =
+                                 line_length_linter(72),
+                             camel_case_linter = NULL))
 
 lint(filename = "server.R",
-     linters = with_defaults(commented_code_linter = NULL))
+     linters = with_defaults(commented_code_linter = NULL,
+                             line_length_linter =
+                                 line_length_linter(72),
+                             camel_case_linter = NULL))
 ```
 
 Os arquivos neste repositório devem ter codificação UTF-8 (padrão no
