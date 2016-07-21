@@ -155,8 +155,7 @@ shinyServer(function(input, output, session) {
             p <- p +
                 as.layer(with(da01,
                               xyplot(y ~ x, col = 1,
-                                     cex = eval(parse(text = i)),
-                                     par.settings = ps)))
+                                     cex = eval(parse(text = i)))))
         }
         plot(p)
     },
