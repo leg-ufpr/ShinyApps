@@ -1,0 +1,93 @@
+---
+title: "ShinyApps do LEG"
+subtitle: "Aplicações Shiny para Ensino de Estatística"
+output:
+  html_document:
+    css: _style-doc.css
+    highlight: tango
+---
+
+Recursos interativos são ferramentas extraordinárias para o Ensino de
+qualquer disciplina. Na Estatística, em especial, muitos conceitos podem
+ser transmitidos de forma visual por meio de gráficos e animações. No
+entanto, tais recursos ainda são pouco explorados apesar das muitas
+funcionalidades disponíveis em R para a construção de aplicações, que
+são implementadas em vários pacotes: [`rpanel`], [`gWidgets`],
+[`animation`], [`rgl`], [`googleVis`] e [`shiny`], por exemplo. Dentre
+estes, o `shiny` tem a vantagem de permitir a criação e hospedagem de
+aplicações na web, aumentando assim o acesso das pessoas, inclusive
+daqueles que não sabem usar o R.
+
+Com o objetivo de organizar e disponibilizar o código fonte de
+aplicações Shiny voltadas para o Ensino de Estatística, o grupo do [LEG]
+(Laboratório de Estatística e Geoinformação ) criou o repositório
+[ShinyApps] e mantém este sítio web para exposição dos materiais
+elaborados.
+
+## Usando as aplicações ##
+
+As aplicações mantidas no repositório [ShinyApps] podem ser utilizadas
+acessando o endereço `http://shiny.leg.ufpr.br/<1>/<2>`, em que `<1>` é
+o nome do usuário (e.g. walmes) e `<2>` é o nome da aplicação
+(e.g. [`http://shiny.leg.ufpr.br/walmes/geor/`]()).
+
+Já para usar localmente as aplicações pode-se prosseguir de pelo menos
+três formas diferentes:
+
+  1. Clonando o repositório;
+  2. Baixando um zip do repositório; ou
+  3. Executando a aplicação a partir do fonte no GitHub.
+
+Na tela inicial do repositório, que exibe este arquivo README, existe um
+botão do lado direito escrito `Clone or download`. Clique nele para
+escolher uma das opções.
+
+Para clonar o repositório você precisa ter o Git instalado. Aí basta
+clonar o projeto com:
+
+```bash
+# Clonando o repositório.
+git clone https://github.com/leg-ufpr/ShinyApps.git
+```
+
+Caso não queira usar o Git, baixe o zip com o conteúdo do repositório e
+descompacte para ter acesso às aplicações.
+
+Para executar as aplicações da cópia local do repositório (por clone ou
+download) faça em uma sessão R:
+
+```r
+# Carrega o pacote shiny.
+library(shiny)
+
+# Roda a aplicação density.
+runApp("density")
+```
+
+Lembre-se de atribuir corretamente o diretório de trabalho para que a
+aplicação seja encontrada pela função. Use `setwd()`. Você pode também
+usar o caminho completo do diretório na aplicação na função `runApp()`.
+
+Por último, caso não queira manter uma cópia local dos arquivos fonte,
+você pode executar as aplicações a partir do endereço no GitHub. O
+fragmento abaixo mostra como executar a aplicação `density` desta forma.
+
+```r
+# Carrega o pacote shiny.
+library(shiny)
+
+# Roda a aplicação density acessando os fontes no GitHub.
+runGitHub(repo = "ShinyApps",
+          username = "leg-ufpr",
+          subdir = "density/")
+```
+
+<!------------------------------------------- -->
+[`rpanel`]: https://cran.r-project.org/web/packages/rpanel/index.html
+[`gWidgets`]: https://cran.r-project.org/web/packages/gWidgets/index.html
+[`rgl`]: https://cran.r-project.org/web/packages/rgl/index.html
+[`animation`]: https://cran.r-project.org/web/packages/animation/index.html
+[`googleVis`]: https://cran.r-project.org/web/packages/googleVis/index.html
+[`shiny`]: https://cran.r-project.org/web/packages/shiny/index.html
+[LEG]: http://www.leg.ufpr.br/doku.php
+[ShinyApps]: https://github.com/leg-ufpr/ShinyApps

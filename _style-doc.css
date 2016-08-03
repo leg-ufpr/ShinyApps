@@ -1,0 +1,91 @@
+/*------------------------------------------- */
+/* Configura estilo geral do documento */
+body {
+    text-align: justify;
+}
+
+/*------------------------------------------- */
+/* Configura o estilo do título */
+#header {
+    /* background-color: #F6F6F6; */
+    border-top: 0px solid #003A3A;
+    border-right: 0px solid black;
+    border-bottom: 0px solid #003A3A;
+    border-left: 0px solid black;
+    padding-top: 10px;
+    margin: 10px;
+}
+
+h1.title {
+    text-align: center;
+    line-height: 0.2;
+}
+
+h3.subtitle {
+    text-align: center;
+}
+
+h4.author {
+    text-align: center;
+}
+
+h4.date {
+    text-align: center;
+}
+
+/*------------------------------------------- */
+/* Configura a tabela de conteúdo */
+/* Geral TOC */
+#TOC {
+    /* clear: both; */
+    /* margin: 20px 0px 0px 30px; */
+    padding: 5px;
+    border: 0px solid #CCC;
+    border-radius: 0px;
+    background-color: #F6F6F6;
+    /* font-size: 14px; */
+    /* line-height: 1.5; */
+}
+
+/* Sob argumento yaml toc_float */
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: #149494;
+    border-color: #149494;
+}
+
+.tocify-subheader .tocify-item {
+    font-size: 0.95em;
+    padding-left: 0px;
+    text-align: left;
+}
+
+.tocify .tocify-item a, .tocify .list-group-item {
+    padding: 1px;
+}
+
+/*------------------------------------------- */
+/* Customização de blocos de códigos R */
+pre, code {
+    background-color: #EDEDED;
+    color: #333;
+    font-size: 95%;
+}
+
+pre {
+    word-break: keep-all;
+    margin: 1ex 0px 1ex 0px;
+    padding: 2px 1ex 2px 1ex;
+    border: 0px solid #CCC;
+    border-radius: 0px;
+    padding: 9.5px;
+}
+
+tt, code, pre {
+    font-family: "Inconsolata", "Andale Mono", monospace;
+}
+
+pre:not([class]) {
+    background-color: #D4D4D4;
+}

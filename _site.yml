@@ -1,0 +1,15 @@
+name: "shiny"
+output_dir: "."
+exclude: ["README.md", "LICENSE"]
+output:
+  html_document:
+    theme: yeti
+    highlight: default
+    css:
+navbar:
+  title: "LEG ShinyApps"
+  right:
+    - text: Home
+      href: index.html
+    - icon: fa-github-alt fa-lg
+      href: https://github.com/leg-ufpr/ShinyApps
