@@ -1,11 +1,11 @@
-# ShinyApps - Aplicações Shiny para Ensino de Estatística
+# ShinyApps - Aplicações Shiny para Ensino de Estatística #
 
-Recursos interativos são uma ferramenta extraordinária para o Ensino de
+Recursos interativos são ferramentas extraordinárias para o Ensino de
 qualquer disciplina. Na Estatística, em especial, muitos conceitos podem
-ser transmitido de forma visual por meio de gráficos e animações. No
+ser transmitidos de forma visual por meio de gráficos e animações. No
 entanto, tais recursos ainda são pouco explorados apesar das muitas
-funcionalidades que o R tem para a construção de aplicações que são
-implementações disponíveis em vários pacotes: [`rpanel`], [`gWidgets`],
+funcionalidades disponíveis em R para a construção de aplicações, que
+são implementadas em vários pacotes: [`rpanel`], [`gWidgets`],
 [`animation`], [`rgl`], [`googleVis`] e [`shiny`], por exemplo. Dentre
 estes, o `shiny` tem a vantagem de permitir a criação e hospedagem de
 aplicações na web, aumentando assim o acesso das pessoas, inclusive
@@ -16,18 +16,20 @@ de aplicações Shiny voltadas para o Ensino de Estatística, seja fazendo
 a exibição de conceitos de uma forma iterativa ou fornecendo aplicações
 que automatizem tarefas façam análise ou visualização de dados.
 
-As aplicações aqui mantidas podem ser utilizadas acessando o endereço
-`http://shiny.leg.ufpr.br/<1>/<2>`, em que `<1>` é o nome do usuário
-(e.g. walmes) e `<2>` é o nome da aplicação.
-
 <!-- TODO: Criar um usuário geral na servidora do Shiny. -->
 
-## Como usar
+## Como usar ##
 
-Você pode usar as aplicações Shiny desse repositório de 3 formas:
+As aplicações aqui mantidas podem ser utilizadas acessando o endereço
+`http://shiny.leg.ufpr.br/<1>/<2>`, em que `<1>` é o nome do usuário
+(e.g. walmes) e `<2>` é o nome da aplicação
+(e.g. [`http://shiny.leg.ufpr.br/walmes/geor/`]()).
 
-  1. Clonando o repositório.
-  2. Baixando um zip do repositório.
+Já para usar localmente as aplicações pode-se prosseguir de pelo menos
+três formas diferentes:
+
+  1. Clonando o repositório;
+  2. Baixando um zip do repositório; ou
   3. Executando a aplicação a partir do fonte no GitHub.
 
 Na tela inicial do repositório, que exibe este arquivo README, existe um
@@ -60,10 +62,9 @@ Lembre-se de atribuir corretamente o diretório de trabalho para que a
 aplicação seja encontrada pela função. Use `setwd()`. Você pode também
 usar o caminho completo do diretório na aplicação na função `runApp()`.
 
-Por último, caso não queira fazer uma cópia local, você pode executar as
-aplicações a partir do código fonte no GitHub. O fragmento abaixo mostra
-como executar a aplicação `density` sem precisar baixar (diretamente) os
-arquivos.
+Por último, caso não queira manter uma cópia local dos arquivos fonte,
+você pode executar as aplicações a partir do endereço no GitHub. O
+fragmento abaixo mostra como executar a aplicação `density` dessa forma.
 
 ```r
 # Carrega o pacote shiny.
