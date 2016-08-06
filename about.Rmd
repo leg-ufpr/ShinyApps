@@ -1,8 +1,5 @@
 ---
-output:
-  html_document:
-    css: _style-doc.css
-    highlight: tango
+output: html_document
 ---
 
 # Desenvolvedores #

@@ -1,10 +1,7 @@
 ---
 title: "ShinyApps do LEG"
 subtitle: "Aplicações Shiny para Ensino de Estatística"
-output:
-  html_document:
-    css: _style-doc.css
-    highlight: tango
+output: html_document
 ---
 
 Recursos interativos são ferramentas extraordinárias para o Ensino de

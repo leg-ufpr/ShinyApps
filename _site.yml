@@ -4,8 +4,8 @@ exclude: ["README.md", "LICENSE"]
 output:
   html_document:
     theme: yeti
-    highlight: default
-    css:
+    highlight: tango
+    css: _style-doc.css
 navbar:
   title: "LEG ShinyApps"
   right:
