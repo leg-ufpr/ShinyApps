@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="_style-doc.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 45px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+
+.section h2 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h3 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h4 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h5 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h6 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">LEG ShinyApps</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="https://github.com/leg-ufpr/ShinyApps">
+    <span class="fa fa-github-alt fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div id="desenvolvedores" class="section level1">
+<h1>Desenvolvedores</h1>
+<p><strong><a href="http://lattes.cnpq.br/4410617539281650">Walmes Marques Zeviani</a></strong><br />
+Doutor em Estatistica e Experimentação Agropecuária pela Universidade Federal de Lavras; membro do Laboratório de Estatística e Geoinformação e Tutor do Programa de Educação Tutorial na UFPR. Leciona disciplinas do departamento de Estatística da UFPR, implementando aplicativos <code>shiny</code> que auxiliem o aprendizado dos alunos e suas atividades.</p>
+<p><strong><a href="http://lattes.cnpq.br/9517198687029938">Eduardo Elias Ribeiro Junior</a></strong><br />
+Bacharel em Estatística pela Universidade Federal do Paraná; membro do Laboratório de Estatística e Geoinformação e bolsista FAPEMIG no Centro de Telessaúde do Hospital de Clínicas da UFMG. Elabora aplicativos <code>shiny</code> para divulgação Estatística e exibição/exploarção de conceitos da área.</p>
+</div>
+<div id="projetos" class="section level1">
+<h1>Projetos</h1>
+<p>Projetos que envolvem o pacote <code>shiny</code> e interfaces gráficas em geral, com participação dos desenvolvedores:</p>
+<p><img src = "https://raw.githubusercontent.com/JrEduardo/iguiR/master/iguiR.png" width=60px align="left" style="margin-right: 20px;"> <a href="https://github.com/JrEduardo/iguiR">iguiR</a> - Interactive Graphical User Interface with R.<br />
+Repositório com os arquivos elaborados para o curso ministrado na 60ª RBras/Seagro (<a href="http://www.leg.ufpr.br/~walmes/cursoR/iguiR/">arquivos</a>).</p>
+<p><br></p>
+<p><img src = "https://raw.githubusercontent.com/JrEduardo/meetup-shiny/master/meetup-shiny.png" width=60px align="left" style="margin-right: 20px;"> <a href="https://github.com/JrEduardo/meetup-shiny">meetup-shiny</a> - Introdução ao shiny para aplicações web com R.<br />
+Seminário online do meetup-useR sobre a utilização do <code>shiny</code> (<a href="https://youtu.be/IH03NST_nKs#t=01h01m17s">vídeo</a>/<a href="http://shiny.leg.ufpr.br/eduardo/shiny-meetup/#1">slides</a>).</p>
+<p><br></p>
+<p><img src = "https://raw.githubusercontent.com/pet-estatistica/iguir2/master/iguir2.png" width=60px align="left" style="margin-right: 20px;"> <a href="https://github.com/pet-estatistica/iguir2">iguir2</a> - Interactive Graphical User Interface with R (2ª edição).<br />
+Repositório com os arquivos elaborados para o curso ministrado na XII - Semana da Estatística da UEM.</p>
+<p><br></p>
+<p><img src = "https://gitlab.c3sl.ufpr.br/pet-estatistica/stats-games/raw/master/stats-games.png" width=60px align="left" style="margin-right: 20px;"> <a href="https://gitlab.c3sl.ufpr.br/pet-estatistica/stats-games">stats-games</a> - Jogos interativos em Estatística.<br />
+Jogos interativos elaborados em <code>shiny</code> para ilustrar conceitos de Estatística a estudantes do ensino médio (<a href="http://shiny.leg.ufpr.br/pet-estatistica/stats-games/">games</a>).</p>
+<!--------------------------------------------- -->
+<!-- Links -->
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

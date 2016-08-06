@@ -11,5 +11,7 @@ navbar:
   right:
     - text: Home
       href: index.html
+    - text: About
+      href: about.html
     - icon: fa-github-alt fa-lg
       href: https://github.com/leg-ufpr/ShinyApps

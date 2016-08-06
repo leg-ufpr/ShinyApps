@@ -1,0 +1,64 @@
+---
+output:
+  html_document:
+    css: _style-doc.css
+    highlight: tango
+---
+
+# Desenvolvedores #
+
+**[Walmes Marques Zeviani]**\
+Doutor em Estatistica e Experimentação Agropecuária pela Universidade
+Federal de Lavras; membro do Laboratório de Estatística e Geoinformação
+e Tutor do Programa de Educação Tutorial na UFPR. Leciona disciplinas do
+departamento de Estatística da UFPR, implementando aplicativos `shiny`
+que auxiliem o aprendizado dos alunos e suas atividades.
+
+**[Eduardo Elias Ribeiro Junior]**\
+Bacharel em Estatística pela Universidade Federal do Paraná; membro do
+Laboratório de Estatística e Geoinformação e bolsista FAPEMIG no Centro
+de Telessaúde do Hospital de Clínicas da UFMG. Elabora aplicativos
+`shiny` para divulgação Estatística e exibição/exploarção de conceitos
+da área.
+
+# Projetos #
+
+Projetos que envolvem o pacote `shiny` e interfaces gráficas em geral,
+com participação dos desenvolvedores:
+
+<img src = "https://raw.githubusercontent.com/JrEduardo/iguiR/master/iguiR.png" width=60px align="left" style="margin-right: 20px;">
+[iguiR] - Interactive Graphical User Interface with R.\
+Repositório com os arquivos elaborados para o curso ministrado na 60ª
+RBras/Seagro ([arquivos](http://www.leg.ufpr.br/~walmes/cursoR/iguiR/)).
+
+<br>
+
+<img src = "https://raw.githubusercontent.com/JrEduardo/meetup-shiny/master/meetup-shiny.png" width=60px align="left" style="margin-right: 20px;">
+[meetup-shiny] - Introdução ao shiny para aplicações web com R.\
+Seminário online do meetup-useR sobre a utilização do `shiny`
+([vídeo](https://youtu.be/IH03NST_nKs#t=01h01m17s)/[slides](http://shiny.leg.ufpr.br/eduardo/shiny-meetup/#1)).
+
+<br>
+
+<img src = "https://raw.githubusercontent.com/pet-estatistica/iguir2/master/iguir2.png" width=60px align="left" style="margin-right: 20px;">
+[iguir2] - Interactive Graphical User Interface with R (2ª edição).\
+Repositório com os arquivos elaborados para o curso ministrado na XII -
+Semana da Estatística da UEM.
+
+<br>
+
+<img src = "https://gitlab.c3sl.ufpr.br/pet-estatistica/stats-games/raw/master/stats-games.png" width=60px align="left" style="margin-right: 20px;">
+[stats-games] - Jogos interativos em Estatística.\
+Jogos interativos elaborados em `shiny` para ilustrar conceitos de Estatística a
+estudantes do ensino médio ([games](http://shiny.leg.ufpr.br/pet-estatistica/stats-games/)).
+
+<!--------------------------------------------- -->
+<!-- Links -->
+
+[LEG]: http://www.leg.ufpr.br/doku.php
+[Walmes Marques Zeviani]: http://lattes.cnpq.br/4410617539281650
+[Eduardo Elias Ribeiro Junior]: http://lattes.cnpq.br/9517198687029938
+[iguiR]: https://github.com/JrEduardo/iguiR
+[iguir2]: https://github.com/pet-estatistica/iguir2
+[meetup-shiny]: https://github.com/JrEduardo/meetup-shiny
+[stats-games]: https://gitlab.c3sl.ufpr.br/pet-estatistica/stats-games
