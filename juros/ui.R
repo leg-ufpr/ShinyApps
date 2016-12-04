@@ -41,7 +41,17 @@ shinyUI(
                         tableOutput("PARCELAS")),
                     tabPanel(
                         "Gráfico",
-                        plotOutput("GRAFICO"))
+                        plotOutput("GRAFICO"),
+                        HTML(paste(
+                            "Neste gráfico, a linha vermelha",
+                            "representa os valores da coluna",
+                            "<strong>Amort. acum.</strong> da tabela",
+                            "Parcelas e representa o pagamento para",
+                            "amortização do imóvel sem considerar os",
+                            "juros. A linha preta são os valores da",
+                            "coluna <strong>Custo se quitar</strong>",
+                            "e representa o pagamento para",
+                            "amortização considerando os juros.")))
                 ) # tabsetPanel
             ) # mainPanel
         ), # sidebarLayout

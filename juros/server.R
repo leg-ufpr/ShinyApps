@@ -29,6 +29,7 @@ shinyServer(function(input, output) {
                           "Parc. acum." = NA,
                           "Restante" = vfinanc - (0:nmes) * vam,
                           # "Total pago" = NA,
+                          "Custo se quitar" = NA,
                           check.names = FALSE)
 
         tab[nrow(tab), 3:7] <- 0
@@ -38,6 +39,7 @@ shinyServer(function(input, output) {
         tab[, "Amort. acum."] <- cumsum(tab$Amortizado)
         tab[, "Jur. acum."] <- cumsum(tab$Juros)
         tab[, "Parc. acum."] <- cumsum(tab$Parcela)
+        tab[, "Custo se quitar"] <- tab$"Parc. acum." + tab$Restante
         names(tab)[-1] <- paste(names(tab)[-1], "(R$)")
 
         # Total pago apenas em juros.
@@ -46,6 +48,7 @@ shinyServer(function(input, output) {
         vfem <- sum(tab$Parcela)
 
         # Tabela resumo do financiamento.
+        m <- c(2, 3, 5) * 12 + 1
         res <- data.frame(
             Item = c(
                 "Valor do imóvel (R$)",
@@ -74,7 +77,7 @@ shinyServer(function(input, output) {
                 vfem,
                 100 * vfem/vfinanc,
                 vfem/nmes,
-                tab[c(2, 3, 5) * 12 + 1, 7]))
+                rowSums(tab[m, 7:8])))
 
         L <- list(res = res, tab = tab)
         return(L)
@@ -83,7 +86,7 @@ shinyServer(function(input, output) {
     output$RESUMO <- renderTable({
         FUN()$res
     },
-    include.rownames = FALSE, digits = c(0, 0, 3))
+    include.rownames = FALSE, digits = c(0, 0, 2))
 
     output$PARCELAS <- renderTable({
         FUN()$tab
@@ -101,8 +104,8 @@ shinyServer(function(input, output) {
         plot(c(L$tab[, 7]) ~ c(L$tab[, 1]/12),
              type = "l",
              # ylim = c(vtot, 2 * vtot),
-             xlab = "Tempo para amortizar o empréstimo (anos)",
-             ylab = "Custo final do empréstimo (R$)")
+             xlab = "Tempo de uso do empréstimo (anos)",
+             ylab = "Valor pago do empréstimo (R$)")
         grid()
         title(main = list(sprintf(
                   "Entrada de R$ %0.2f\tEmprétimo de R$ %0.2f",
@@ -112,7 +115,7 @@ shinyServer(function(input, output) {
                  x1 = max(L$tab[, 1])/12,
                  y1 = vtot - vfinanc, col = 2)
         legend("bottomright",
-               legend = c("Com juros", "Sem juros"),
+               legend = c("Parcelas com juros", "Parcelas sem juros"),
                lty = 1, col = 1:2, bty = "n")
 
         par()$mar
@@ -122,7 +125,7 @@ shinyServer(function(input, output) {
              at = s,
              labels = formatC(100 * s/vfinanc, digits = 3))
         mtext(side = 4, line = 2.5,
-              text = "Valor final do empréstimo sob o emprestado (%)")
+              text = "Valor pago com juros sobre o valor amortizado (%)")
         x <- c(2, 3, 5, 10, 15)
         x <- x[x < (nrow(L$tab) - 1)/12]
         if (length(x) > 0) {
