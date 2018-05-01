@@ -163,7 +163,7 @@ server <- function(input, output){
     
     polygon(x = c(input$mu_q - 4*input$sd_q, x_q, y_q),
             y = c(0, y_q.coord, 0),
-            col = "red", border = "red")
+            col = "red", border = "black")
     
     text(x = input$mu_q,
          y = dnorm(input$mu_q)/2,
