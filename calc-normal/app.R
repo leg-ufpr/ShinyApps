@@ -186,7 +186,7 @@ ui <- navbarPage(
               inputId = "df_chisq",
               label = "Graus de liberdade",
               value = 2,
-              min = 0
+              min = 1
             ),
             
             verbatimTextOutput("chisq"),
@@ -370,7 +370,7 @@ server <- function(input, output){
       lower_chisq <- 0
     }
     else{
-      lower_chisq <- 8 * input$df_chisq
+      lower_chisq <- -8 * input$df_chisq
     }
     
     crv_chisq <- curve(dchisq(x, input$df_chisq), xlim = c(lower_chisq, 8 * input$df_chisq), ylab = "Probabilidade")
