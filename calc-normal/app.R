@@ -3,141 +3,231 @@ library(scales)
 
 ui <- navbarPage(
   
-  "Calculadoras de Distribuições de Probabilidade Contínuas",
+  "Calculadoras de Distribuições de Probabilidade",
   
-  tabPanel(
-    "Calculadora da Distribuição Normal",
+  navbarMenu("Distribuições Contínuas",
     
-    column(3, wellPanel(
-    
-    numericInput(
-      inputId = "xlower",
-      label = "Limite inferior de x",
-      value = -Inf
-      ),
-    
-    numericInput(
-      inputId = "xupper",
-      label = "Limite superior de x",
-      value = Inf
+    tabPanel(
+      
+      "Distribuição Normal",
+      
+      fluidRow(
+      
+        column(3,
+               
+          wellPanel(
+            
+            numericInput(
+              inputId = "xlower",
+              label = "Limite inferior de x",
+              value = -Inf
+            ),
+          
+            numericInput(
+              inputId = "xupper",
+              label = "Limite superior de x",
+              value = Inf
+            ),
+          
+            numericInput(
+              inputId = "mu",
+              label = "Média",
+              value = 0
+            ),
+          
+            numericInput(
+              inputId = "sd",
+              label = "Desvio padrão",
+              value = 1,
+              min = .00000000001
+            ),
+          
+            verbatimTextOutput("norm"),
+        
+            submitButton(
+              text = "Calcular!"
+            )
+          )
+        ),
+      
+        column(9,
+             
+          wellPanel(
+          
+            plotOutput("plot")
+        
+          )
+        )
+      )
     ),
     
-    numericInput(
-      inputId = "mu",
-      label = "Média",
-      value = 0
+    tabPanel(
+      
+      "Quantis da Distribuição Normal",
+      
+      fluidRow(
+      
+        column(3,
+               
+          wellPanel(
+            
+            numericInput(
+              inputId = "q",
+              label = "Valor do Quantil",
+              value = .5,
+              min = 0,
+              max = 1
+            ),
+        
+            numericInput(
+              inputId = "mu_q",
+              label = "Média",
+              value = 0
+            ),
+        
+            numericInput(
+              inputId = "sd_q",
+              label = "Desvio padrão",
+              value = 1,
+              min = .00000000001
+            ),
+        
+            verbatimTextOutput("norm_q"),
+        
+            submitButton(
+            text = "Calcular!"
+            )
+          )
+        ),
+      
+        column(9,
+               
+          wellPanel(
+            
+            plotOutput("plot_q")
+          )
+        )
+      )
+    ),
+      
+    tabPanel(
+      
+      "Distribuição t-Student",
+      
+      fluidRow(
+    
+        column(3,
+               
+          wellPanel(
+        
+            numericInput(
+              inputId = "x_t_lower",
+              label = "Limite inferior de x",
+              value = -5
+            ),
+        
+            numericInput(
+              inputId = "x_t_upper",
+              label = "Limite superior de x",
+              value = 5
+            ),
+        
+            numericInput(
+              inputId = "df_t",
+              label = "Graus de liberdade",
+              value = 5,
+              min = 2
+            ),
+        
+            verbatimTextOutput("t"),
+            
+            submitButton(
+              text = "Calcular!"
+            )
+          )
+        ),
+        
+        column(9,
+               
+          wellPanel(
+          
+            plotOutput("plot_t")
+          
+          )
+        )
+      )
     ),
     
-    numericInput(
-      inputId = "sd",
-      label = "Desvio padrão",
-      value = 1,
-      min = .00000000001
-    ),
-    
-    verbatimTextOutput("norm"),
-    
-    submitButton(
-      text = "Calcular!"
+    tabPanel(
+
+      "Distribuição Chi quadrado",
+
+      fluidPage(
+
+        column(3,
+        
+          wellPanel(
+            
+            numericInput(
+              inputId = "x_chisq_lower",
+              label = "Limite inferior de x",
+              value = 0,
+              min = 0
+            ),
+            
+            numericInput(
+              inputId = "x_chisq_upper",
+              label = "Limite superior de x",
+              value = 5,
+              min = 0
+            ),
+            
+            numericInput(
+              inputId = "df_chisq",
+              label = "Graus de liberdade",
+              value = 2,
+              min = 0
+            ),
+            
+            verbatimTextOutput("chisq"),
+            
+            submitButton(
+              text = "Calcular!"
+            )
+          )          
+        ),
+        
+        column(9,
+          
+          wellPanel(
+                 
+             plotOutput("plot_chisq")
+                 
+          )
+        )
+      )
     )
-    
-    
-  )),
-  
-  column(9, wellPanel(
-    
-    plotOutput("plot")
-    
-  ))
-),
-
-  tabPanel(
-    "Calculadora de quantis da Distribuição Normal",
-    
-    column(3, wellPanel(
-      
-      numericInput(
-        inputId = "q",
-        label = "Valor do Quantil",
-        value = .5,
-        min = 0,
-        max = 1
-      ),
-      
-      numericInput(
-        inputId = "mu_q",
-        label = "Média",
-        value = 0
-      ),
-      
-      numericInput(
-        inputId = "sd_q",
-        label = "Desvio padrão",
-        value = 1,
-        min = .00000000001
-      ),
-      
-      verbatimTextOutput("norm_q"),
-      
-      submitButton(
-        text = "Calcular!"
-      )
-      
-      
-    )),
-    
-    column(9, wellPanel(
-      
-      plotOutput("plot_q")
-      
-    ))
   ),
-
-  tabPanel(
+  
+  navbarMenu(
     
-    "Distribuição t-Student",
+    "Distribuições Discretas",
     
-    column(3, wellPanel(
+    tabPanel(
       
-      numericInput(
-        inputId = "x_t_lower",
-        label = "Limite inferior de x",
-        value = -5
-      ),
+      "Em obras!",
+    
+      fluidPage(
       
-      numericInput(
-        inputId = "x_t_upper",
-        label = "Limite superior de x",
-        value = 5
-      ),
-      
-      numericInput(
-        inputId = "df_t",
-        label = "Graus de liberdade",
-        value = 5,
-        min = 2
-      ),
-      
-      verbatimTextOutput("t"),
-      
-      submitButton(
-        text = "Calcular!"
+        column(12,
+             
+          img(src = "http://leg.ufpr.br/~hektor/men-at-work.png", width = 300)           
+        
+        )
       )
-      
-    )),
-      
-      column(9, wellPanel(
-        
-        plotOutput("plot_t")
-        
-      ))
-    
-    
+    )
   )
-
 )
-
-
 
 server <- function(input, output){
   
@@ -274,8 +364,42 @@ server <- function(input, output){
     
   })
   
+  output$plot_chisq <- renderPlot({
+    
+    if(-8 * input$df_chisq < 0){
+      lower_chisq <- 0
+    }
+    else{
+      lower_chisq <- 8 * input$df_chisq
+    }
+    
+    crv_chisq <- curve(dchisq(x, input$df_chisq), xlim = c(lower_chisq, 8 * input$df_chisq), ylab = "Probabilidade")
+    
+    x <- seq(from = input$x_chisq_lower, to = input$x_chisq_upper, length.out = 1000)
+    
+    y <- dchisq(x, input$df_chisq)
+    
+    xcoord <- c(input$x_chisq_lower, x, input$x_chisq_upper)
+    ycoord <- c(0, y, 0)
+    
+    polygon(x = xcoord,
+            y = ycoord,
+            col = "red", border = "black")
+    
+    text(x = 6 * input$df_chisq,
+         y = max(crv_chisq$y)/2,
+         labels = round((pchisq(input$x_chisq_upper, input$df_chisq) -
+                           pchisq(input$x_chisq_lower, input$df_chisq)), 4),
+         cex = 4)
+    
+  })
+  
+  output$chisq <- renderPrint({
+    
+    pchisq(input$x_chisq_upper, input$df_chisq) - pchisq(input$x_chisq_lower, input$df_chisq)
+    
+  })
+  
 }
 
 shinyApp(ui = ui, server = server)
-
-
