@@ -41,6 +41,12 @@ ui <- navbarPage(
               value = 1,
               min = .00000000001
             ),
+            
+            checkboxInput(
+              inputId = "tail_norm",
+              label = "Cauda inferior (P[X < x])",
+              value = TRUE
+            ),
           
             verbatimTextOutput("norm"),
         
@@ -72,8 +78,8 @@ ui <- navbarPage(
           wellPanel(
             
             numericInput(
-              inputId = "q",
-              label = "Valor do Quantil",
+              inputId = "p",
+              label = "Probabilidade",
               value = .5,
               min = 0,
               max = 1
@@ -90,6 +96,12 @@ ui <- navbarPage(
               label = "Desvio padrão",
               value = 1,
               min = .00000000001
+            ),
+            
+            checkboxInput(
+              inputId = "tail_q_norm",
+              label = "Cauda inferior (P[X < x])",
+              value = TRUE
             ),
         
             verbatimTextOutput("norm_q"),
@@ -123,13 +135,13 @@ ui <- navbarPage(
             numericInput(
               inputId = "x_t_lower",
               label = "Limite inferior de x",
-              value = -5
+              value = -Inf
             ),
         
             numericInput(
               inputId = "x_t_upper",
               label = "Limite superior de x",
-              value = 5
+              value = Inf
             ),
         
             numericInput(
@@ -137,6 +149,12 @@ ui <- navbarPage(
               label = "Graus de liberdade",
               value = 5,
               min = 2
+            ),
+            
+            checkboxInput(
+              inputId = "tail_t",
+              label = "Cauda inferior (P[X < x])",
+              value = TRUE
             ),
         
             verbatimTextOutput("t"),
@@ -187,6 +205,12 @@ ui <- navbarPage(
               label = "Graus de liberdade",
               value = 2,
               min = 1
+            ),
+            
+            checkboxInput(
+              inputId = "tail_chisq",
+              label = "Cauda inferior (P[X < x])",
+              value = TRUE
             ),
             
             verbatimTextOutput("chisq"),
@@ -242,15 +266,27 @@ server <- function(input, output){
     }
     else{
       if(is.finite(input$xlower)){
-        lower <- input$xlower
-        upper <- input$mu + 4*input$sd
+        if(input$tail_norm == FALSE){
+          lower <- input$xlower
+          upper <- input$mu + 4*input$sd
+        }
+        else{
+          lower <- input$mu - 4*input$sd
+          upper <- input$xlower
+        }
         x <- seq(from = lower, to = upper, length.out = 1000)
         col <- "red"
         border <- "black"
       }
       else if(is.finite(input$xupper)){
-        lower <- input$mu - 4*input$sd
-        upper <- input$xupper
+        if(input$tail_norm == FALSE){
+          lower <- input$xupper
+          upper <- input$mu + 4*input$sd
+        }
+        else{
+          lower <- input$mu - 4*input$sd
+          upper <- input$xupper
+        }
         x <- seq(from = lower, to = upper, length.out = 1000)
         col <- "red"
         border <- "black"
@@ -266,7 +302,6 @@ server <- function(input, output){
     
     y <- dnorm(x, input$mu, input$sd)
     
-    
     xcoord <- c(lower, x, upper)
     ycoord <- c(0, y, 0)
     
@@ -276,10 +311,28 @@ server <- function(input, output){
             y = ycoord,
             col = col, border = border)
     
+    if(is.finite(input$xlower) & is.finite(input$xupper)){
+      lower <- input$xlower
+      upper <- input$xupper
+      lab <- pnorm(upper, input$mu, input$sd) - pnorm(lower, input$mu, input$sd)
+    }
+    else{
+      if(is.finite(input$xlower)){
+        lower <- input$xlower
+        lab <- 1 - pnorm(lower, input$mu, input$sd, input$tail_norm == FALSE)
+      }
+      else if(is.finite(input$xupper)){
+        upper <- input$xupper
+        lab <- pnorm(upper, input$mu, input$sd, input$tail_norm)
+      }
+      else if(!is.finite(input$xlower) & !is.finite(input$xlower)){
+        lab <- 1
+      }
+    }
+    
     text(x = input$mu,
          y = max(crv_norm$y)/2,
-         labels = round((pnorm(upper, input$mu, input$sd) -
-           pnorm(lower, input$mu, input$sd)), 4),
+         labels = round(lab, 4),
          cex = 4)
     
   })
@@ -289,15 +342,16 @@ server <- function(input, output){
     if(is.finite(input$xlower) & is.finite(input$xupper)){
       lower <- input$xlower
       upper <- input$xupper
+      pnorm(upper, input$mu, input$sd) - pnorm(lower, input$mu, input$sd)
     }
     else{
       if(is.finite(input$xlower)){
         lower <- input$xlower
-        upper <- input$mu + 4*input$sd
+        1 - pnorm(lower, input$mu, input$sd, input$tail_norm == FALSE)
       }
       else if(is.finite(input$xupper)){
-        lower <- input$mu - 4*input$sd
         upper <- input$xupper
+        pnorm(upper, input$mu, input$sd, input$tail_norm)
       }
       else if(!is.finite(input$xlower) & !is.finite(input$xlower)){
         lower <- input$mu - 4*input$sd
@@ -305,7 +359,7 @@ server <- function(input, output){
       }
     }
     
-    pnorm(upper, input$mu, input$sd) - pnorm(lower, input$mu, input$sd)
+
     
   })
   
@@ -313,54 +367,138 @@ server <- function(input, output){
     
     crv_q <- curve(dnorm(x, input$mu_q, input$sd_q), xlim = c(input$mu_q - 4*input$sd_q, input$mu_q + 4*input$sd_q), ylab = "Probabilidade")
     
-    y_q <- qnorm(input$q, input$mu_q, input$sd_q)
-    x_q <- seq(from = input$mu_q - 4*input$sd_q, to = y_q, length.out = 1000)
+    y_q <- qnorm(input$p, input$mu_q, input$sd_q, lower.tail = input$tail_q_norm)
+    
+    if(input$tail_q_norm == FALSE){
+      x_q <- seq(from = qnorm(input$p, input$mu_q, input$sd_q, lower.tail = FALSE), to = input$mu_q + 4*input$sd_q, length.out = 1000)
+    }
+    else{
+      x_q <- seq(from = input$mu_q - 4*input$sd_q, to = y_q, length.out = 1000)
+    }
+    
     y_q.coord <- dnorm(x_q, input$mu_q, input$sd_q)
     
     
-    polygon(x = c(input$mu_q - 4*input$sd_q, x_q, y_q),
+    polygon(x = c(min(x_q), x_q, max(x_q)),
             y = c(0, y_q.coord, 0),
             col = "red", border = "black")
     
-    text(x = input$mu_q,
-         y = max(crv_q$y)/2,
-         labels = round(y_q),
-         cex = 4)
+    # text(x = input$mu_q,
+    #      y = max(crv_q$y)/2,
+    #      labels = round(y_q),
+    #      cex = 4)
     
   })
   
   output$norm_q <- renderPrint({
     
-    qnorm(input$q, input$mu_q, input$sd_q)
+    qnorm(input$p, input$mu_q, input$sd_q, lower.tail = input$tail_q_norm)
     
   })
   
   output$plot_t <- renderPlot({
     
-    crv_t <- curve(dt(x, input$df_t), xlim = c(-4 * input$df_t/(input$df_t - 2), 4 * input$df_t/(input$df_t - 2)), ylab = "Probabilidade")
+    if(is.finite(input$x_t_lower) & is.finite(input$x_t_upper)){
+      lower <- input$x_t_lower
+      upper <- input$x_t_upper
+      x <- seq(from = lower, to = upper, length.out = 1000)
+      col <- "red"
+      border <- "black"
+    }
+    else{
+      if(is.finite(input$x_t_lower)){
+        if(input$tail_t){
+          lower <- -6
+          upper <- input$x_t_lower
+        }
+        else{
+          lower <- input$x_t_lower
+          upper <- 6
+        }
+        x <- seq(from = lower, to = upper, length.out = 1000)
+        col <- "red"
+        border <- "black"
+      }
+      else if(is.finite(input$x_t_upper)){
+        if(input$tail_t){
+          lower <- -6
+          upper <- input$x_t_upper
+        }
+        else{
+          lower <- input$x_t_upper
+          upper <- 6
+        }
+        x <- seq(from = lower, to = upper, length.out = 1000)
+        col <- "red"
+        border <- "black"
+      }
+      else if(!is.finite(input$x_t_lower) & !is.finite(input$x_t_lower)){
+        lower <- -6
+        upper <- 6
+        x <- seq(from = lower, to = upper, length.out = 1000)
+        col = NA
+        border = NA
+      }
+    }
     
-    x <- seq(from = input$x_t_lower, to = input$x_t_upper, length.out = 1000)
+    crv_t <- curve(dt(x, input$df_t), xlim = c(-4 * input$df_t/(input$df_t - 2), 4 * input$df_t/(input$df_t - 2)), ylab = "Probabilidade")
     
     y <- dt(x, input$df_t)
     
-    xcoord <- c(input$x_t_lower, x, input$x_t_upper)
+    xcoord <- c(lower, x, upper)
     ycoord <- c(0, y, 0)
     
     polygon(x = xcoord,
             y = ycoord,
             col = "red", border = "black")
     
+    if(is.finite(input$x_t_lower) & is.finite(input$x_t_upper)){
+      lower <- input$x_t_lower
+      upper <- input$x_t_upper
+      lab <- pt(upper, input$df_t) - pt(lower, input$df_t)
+    }
+    else{
+      if(is.finite(input$x_t_lower)){
+        lower <- input$x_t_lower
+        lab <- 1 - pt(lower, input$df_t, lower = input$tail_t == FALSE)
+      }
+      else if(is.finite(input$x_t_upper)){
+        upper <- input$x_t_upper
+        lab <- pt(upper, input$df_t, lower = input$tail_t)
+      }
+      else if(!is.finite(input$x_t_lower) & !is.finite(input$x_t_lower)){
+        lab <- 1
+      }
+    }
+    
     text(x = 0,
          y = max(crv_t$y)/2,
-         labels = round((pt(input$x_t_upper, input$df_t) -
-                           pt(input$x_t_lower, input$df_t)), 4),
+         labels = round(lab, 4),
          cex = 4)
     
   })
   
   output$t <- renderPrint({
     
-    pt(input$x_t_upper, input$df_t) - pt(input$x_t_lower, input$df_t)
+    if(is.finite(input$x_t_lower) & is.finite(input$x_t_upper)){
+      lower <- input$x_t_lower
+      upper <- input$x_t_upper
+      pt(upper, input$df_t) - pt(lower, input$df_t)
+    }
+    else{
+      if(is.finite(input$x_t_lower)){
+        lower <- input$x_t_lower
+        1 - pt(lower, input$df_t, lower = input$tail_t == FALSE)
+      }
+      else if(is.finite(input$x_t_upper)){
+        upper <- input$x_t_upper
+        pt(upper, input$df_t, lower = input$tail_t)
+      }
+      else if(!is.finite(input$x_t_lower) & !is.finite(input$x_t_lower)){
+        lower <- input$mu - 4*input$sd
+        upper <- input$mu + 4*input$sd
+      }
+    }
     
   })
   
@@ -378,6 +516,10 @@ server <- function(input, output){
     x <- seq(from = input$x_chisq_lower, to = input$x_chisq_upper, length.out = 1000)
     
     y <- dchisq(x, input$df_chisq)
+    
+    if(input$df_chisq == 1 & x[1] == 0){
+      y[1] <- 0
+    }
     
     xcoord <- c(input$x_chisq_lower, x, input$x_chisq_upper)
     ycoord <- c(0, y, 0)
