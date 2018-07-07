@@ -504,16 +504,52 @@ server <- function(input, output){
   
   output$plot_chisq <- renderPlot({
     
-    if(-8 * input$df_chisq < 0){
-      lower_chisq <- 0
+    if(is.finite(input$x_chisq_lower) & is.finite(input$x_chisq_upper)){
+      lower <- input$x_chisq_lower
+      upper <- input$x_chisq_upper
+      x <- seq(from = lower, to = upper, length.out = 1000)
+      col <- "red"
+      border <- "black"
     }
     else{
-      lower_chisq <- -8 * input$df_chisq
+      if(is.finite(input$x_chisq_lower)){
+        if(input$tail_chisq){
+          lower <- 0
+          upper <- input$x_chisq_lower
+        }
+        else{
+          lower <- input$x_chisq_lower
+          upper <- input$df_chisq * 8
+        }
+        x <- seq(from = lower, to = upper, length.out = 1000)
+        col <- "red"
+        border <- "black"
+      }
+      else if(is.finite(input$x_chisq_upper)){
+        if(input$tail_chisq){
+          lower <- 0
+          upper <- input$x_chisq_upper
+        }
+        else{
+          lower <- input$x_chisq_upper
+          upper <- input$df_chisq * 8
+        }
+        x <- seq(from = lower, to = upper, length.out = 1000)
+        col <- "red"
+        border <- "black"
+      }
+      else if(!is.finite(input$x_chisq_lower) & !is.finite(input$x_chisq_lower)){
+        lower <- 0
+        upper <- input$df_chisq * 8
+        x <- seq(from = lower, to = upper, length.out = 1000)
+        col = NA
+        border = NA
+      }
     }
     
-    crv_chisq <- curve(dchisq(x, input$df_chisq), xlim = c(lower_chisq, 8 * input$df_chisq), ylab = "Probabilidade")
+    crv_chisq <- curve(dchisq(x, input$df_chisq), xlim = c(0, 8 * input$df_chisq), ylab = "Probabilidade")
     
-    x <- seq(from = input$x_chisq_lower, to = input$x_chisq_upper, length.out = 1000)
+    x <- seq(from = lower, to = upper, length.out = 1000)
     
     y <- dchisq(x, input$df_chisq)
     
@@ -521,24 +557,61 @@ server <- function(input, output){
       y[1] <- 0
     }
     
-    xcoord <- c(input$x_chisq_lower, x, input$x_chisq_upper)
+    xcoord <- c(lower, x, upper)
     ycoord <- c(0, y, 0)
     
     polygon(x = xcoord,
             y = ycoord,
             col = "red", border = "black")
     
+    if(is.finite(input$x_chisq_lower) & is.finite(input$x_chisq_upper)){
+      lower <- input$x_chisq_lower
+      upper <- input$x_chisq_upper
+      lab <- pchisq(upper, input$df_chisq) - pchisq(lower, input$df_chisq)
+    }
+    else{
+      if(is.finite(input$x_chisq_lower)){
+        lower <- input$x_chisq_lower
+        lab <- 1 - pchisq(lower, input$df_chisq, lower = input$tail_chisq == FALSE)
+      }
+      else if(is.finite(input$x_chisq_upper)){
+        upper <- input$x_chisq_upper
+        lab <- pchisq(upper, input$df_chisq, lower = input$tail_chisq)
+      }
+      else if(!is.finite(input$x_chisq_lower) & !is.finite(input$x_chisq_lower)){
+        lab <- 1
+      }
+    }
+    
     text(x = 6 * input$df_chisq,
          y = max(crv_chisq$y)/2,
-         labels = round((pchisq(input$x_chisq_upper, input$df_chisq) -
-                           pchisq(input$x_chisq_lower, input$df_chisq)), 4),
+         labels = round(lab, 4),
          cex = 4)
     
   })
   
   output$chisq <- renderPrint({
     
-    pchisq(input$x_chisq_upper, input$df_chisq) - pchisq(input$x_chisq_lower, input$df_chisq)
+    if(is.finite(input$x_chisq_lower) & is.finite(input$x_chisq_upper)){
+      lower <- input$x_chisq_lower
+      upper <- input$x_chisq_upper
+      pchisq(upper, input$df_chisq) - pchisq(lower, input$df_chisq)
+    }
+    else{
+      if(is.finite(input$x_chisq_lower)){
+        lower <- input$x_chisq_lower
+        1 - pchisq(lower, input$df_chisq, lower = input$tail_chisq == FALSE)
+      }
+      else if(is.finite(input$x_chisq_upper)){
+        upper <- input$x_chisq_upper
+        pchisq(upper, input$df_chisq, lower = input$tail_chisq)
+      }
+      else if(!is.finite(input$x_chisq_lower) & !is.finite(input$x_chisq_lower)){
+        lower <- input$mu - 4*input$sd
+        upper <- input$mu + 4*input$sd
+        pchisq(upper, input$df_chisq, lower = input$tail_chisq) - pchisq(lower, input$df_chisq, lower = input$tail_chisq)
+      }
+    }
     
   })
   
