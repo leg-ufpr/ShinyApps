@@ -230,6 +230,122 @@ ui <- navbarPage(
           )
         )
       )
+    ),
+    
+    tabPanel(
+      
+      "Distribuição Exponencial",
+      
+      fluidPage(
+        
+        column(3,
+          
+          wellPanel(
+            
+            numericInput(
+              inputId = "x_exp_lower",
+              label = "Limite inferior de x",
+              value = -Inf,
+              min = 0
+            ),
+                 
+            numericInput(
+              inputId = "x_exp_upper",
+              label = "Limite superior de x",
+              value = Inf,
+              min = 0
+            ),
+                 
+            numericInput(
+              inputId = "lambda_exp",
+              label = "Taxa",
+              value = 2,
+              min = 1
+            ),
+                 
+            checkboxInput(
+              inputId = "tail_exp",
+              label = "Cauda inferior (P[X < x])",
+              value = TRUE
+            ),
+                 
+            verbatimTextOutput("exp"),
+                 
+            submitButton(
+              text = "Calcular!"
+            )
+          )          
+        ),
+        
+        column(9,
+          
+          wellPanel(
+            
+            plotOutput("plot_exp")
+          )
+        )
+      )
+    ),
+    
+    tabPanel(
+      
+      "Distribuição Gama",
+      
+      fluidPage(
+        
+        column(3,
+          
+          wellPanel(
+            numericInput(
+              inputId = "x_gamma_lower",
+              label = "Limite inferior de x",
+              value = -Inf,
+              min = 0
+            ),
+                 
+            numericInput(
+              inputId = "x_gamma_upper",
+              label = "Limite superior de x",
+              value = Inf,
+              min = 0
+            ),
+                 
+            numericInput(
+              inputId = "gamma_alpha",
+              label = "Alfa",
+              value = 2,
+              min = .0001
+            ),
+            
+            numericInput(
+              inputId = "gamma_beta",
+              label = "Beta",
+              value = 4,
+              min = .0001
+            ),
+                 
+            checkboxInput(
+              inputId = "tail_gamma",
+              label = "Cauda inferior (P[X < x])",
+              value = TRUE
+            ),
+                 
+            verbatimTextOutput("gamma"),
+                 
+            submitButton(
+              text = "Calcular!"
+            )
+          )          
+        ),
+        
+        column(9,
+          
+          wellPanel(
+            
+            plotOutput("plot_gamma")
+          )
+        )
+      )
     )
   ),
   
@@ -610,6 +726,235 @@ server <- function(input, output){
         lower <- input$mu - 4*input$sd
         upper <- input$mu + 4*input$sd
         pchisq(upper, input$df_chisq, lower = input$tail_chisq) - pchisq(lower, input$df_chisq, lower = input$tail_chisq)
+      }
+    }
+    
+  })
+  
+  output$plot_exp <- renderPlot({
+    
+    if(is.finite(input$x_exp_lower) & is.finite(input$x_exp_upper)){
+      lower <- input$x_exp_lower
+      upper <- input$x_exp_upper
+      x <- seq(from = lower, to = upper, length.out = 1000)
+      col <- "red"
+      border <- "black"
+    }
+    else{
+      if(is.finite(input$x_exp_lower)){
+        if(input$tail_exp){
+          lower <- 0
+          upper <- input$x_exp_lower
+        }
+        else{
+          lower <- input$x_exp_lower
+          upper <- input$lambda_exp
+        }
+        x <- seq(from = lower, to = upper, length.out = 1000)
+        col <- "red"
+        border <- "black"
+      }
+      else if(is.finite(input$x_exp_upper)){
+        if(input$tail_exp){
+          lower <- 0
+          upper <- input$x_exp_upper
+        }
+        else{
+          lower <- input$x_exp_upper
+          upper <- input$lambda_exp
+        }
+        x <- seq(from = lower, to = upper, length.out = 1000)
+        col <- "red"
+        border <- "black"
+      }
+      else if(!is.finite(input$x_exp_lower) & !is.finite(input$x_exp_lower)){
+        lower <- 0
+        upper <- input$lambda_exp
+        x <- seq(from = lower, to = upper, length.out = 1000)
+        col = NA
+        border = NA
+      }
+    }
+    
+    crv_exp <- curve(dexp(x, input$lambda_exp), xlim = c(0, input$lambda_exp), ylab = "Probabilidade")
+    
+    x <- seq(from = lower, to = upper, length.out = 1000)
+    
+    y <- dexp(x, input$lambda_exp)
+    
+    xcoord <- c(lower, x, upper)
+    ycoord <- c(0, y, 0)
+    
+    polygon(x = xcoord,
+            y = ycoord,
+            col = "red", border = "black")
+    
+    if(is.finite(input$x_exp_lower) & is.finite(input$x_exp_upper)){
+      lower <- input$x_exp_lower
+      upper <- input$x_exp_upper
+      lab <- pexp(upper, input$lambda_exp) - pexp(lower, input$lambda_exp)
+    }
+    else{
+      if(is.finite(input$x_exp_lower)){
+        lower <- input$x_exp_lower
+        lab <- 1 - pexp(lower, input$lambda_exp, lower = input$tail_exp == FALSE)
+      }
+      else if(is.finite(input$x_exp_upper)){
+        upper <- input$x_exp_upper
+        lab <- pexp(upper, input$lambda_exp, lower = input$tail_exp)
+      }
+      else if(input$lambda_exp == 0){
+        lab <- 0
+      }
+      else if(!is.finite(input$x_exp_lower) & !is.finite(input$x_exp_lower)){
+        lab <- 1
+      }
+    }
+    
+    text(x = 6 * input$lambda_exp,
+         y = max(crv_exp$y)/2,
+         labels = round(lab, 4),
+         cex = 4)
+    
+  })
+  
+  output$exp <- renderPrint({
+    
+    if(is.finite(input$x_exp_lower) & is.finite(input$x_exp_upper)){
+      lower <- input$x_exp_lower
+      upper <- input$x_exp_upper
+      pexp(upper, input$lambda_exp) - pexp(lower, input$lambda_exp)
+    }
+    else{
+      if(is.finite(input$x_exp_lower)){
+        lower <- input$x_exp_lower
+        1 - pexp(lower, input$lambda_exp, lower = input$tail_exp == FALSE)
+      }
+      else if(is.finite(input$x_exp_upper)){
+        upper <- input$x_exp_upper
+        pexp(upper, input$lambda_exp, lower = input$tail_exp)
+      }
+      else if(!is.finite(input$x_exp_lower) & !is.finite(input$x_exp_lower)){
+        lower <- 0
+        upper <- input$mu + 4*input$sd
+        pexp(upper, input$lambda_exp, lower = input$tail_exp) - pexp(lower, input$lambda_exp, lower = input$tail_exp)
+      }
+    }
+    
+  })
+  
+  output$plot_gamma <- renderPlot({
+    
+    if(is.finite(input$x_gamma_lower) & is.finite(input$x_gamma_upper)){
+      lower <- input$x_gamma_lower
+      upper <- input$x_gamma_upper
+      x <- seq(from = lower, to = upper, length.out = 1000)
+      col <- "red"
+      border <- "black"
+    }
+    else{
+      if(is.finite(input$x_gamma_lower)){
+        if(input$tail_gamma){
+          lower <- 0
+          upper <- input$x_gamma_lower
+        }
+        else{
+          lower <- input$x_gamma_lower
+          upper <- qgamma(.999, shape = input$gamma_alpha, scale = input$gamma_beta)
+        }
+        x <- seq(from = lower, to = upper, length.out = 1000)
+        col <- "red"
+        border <- "black"
+      }
+      else if(is.finite(input$x_gamma_upper)){
+        if(input$tail_gamma){
+          lower <- 0
+          upper <- input$x_gamma_upper
+        }
+        else{
+          lower <- input$x_gamma_upper
+          upper <- qgamma(.999, shape = input$gamma_alpha, scale = input$gamma_beta)
+        }
+        x <- seq(from = lower, to = upper, length.out = 1000)
+        col <- "red"
+        border <- "black"
+      }
+      else if(!is.finite(input$x_gamma_lower) & !is.finite(input$x_gamma_lower)){
+        lower <- 0
+        upper <- qgamma(.999, shape = input$gamma_alpha, scale = input$gamma_beta)
+        x <- seq(from = lower, to = upper, length.out = 1000)
+        col = NA
+        border = NA
+      }
+    }
+    
+    crv_gamma <- curve(dgamma(x, shape = input$gamma_alpha, scale = input$gamma_beta),
+                       xlim = c(0, qgamma(.999, shape = input$gamma_alpha, scale = input$gamma_beta)),
+                       ylab = "Probabilidade")
+    
+    x <- seq(from = lower, to = upper, length.out = 1000)
+    
+    y <- dgamma(x, shape = input$gamma_alpha, scale = input$gamma_beta)
+    
+    xcoord <- c(lower, x, upper)
+    ycoord <- c(0, y, 0)
+    
+    polygon(x = xcoord,
+            y = ycoord,
+            col = "red", border = "black")
+    
+    if(is.finite(input$x_gamma_lower) & is.finite(input$x_gamma_upper)){
+      lower <- input$x_gamma_lower
+      upper <- input$x_gamma_upper
+      lab <- pgamma(upper, shape = input$gamma_alpha, scale = input$gamma_beta) -
+        pgamma(lower, shape = input$gamma_alpha, scale = input$gamma_beta)
+    }
+    else{
+      if(is.finite(input$x_gamma_lower)){
+        lower <- input$x_gamma_lower
+        lab <- 1 - pgamma(lower, shape = input$gamma_alpha, scale = input$gamma_beta, lower = input$tail_gamma == FALSE)
+      }
+      else if(is.finite(input$x_gamma_upper)){
+        upper <- input$x_gamma_upper
+        lab <- pgamma(upper, shape = input$gamma_alpha, scale = input$gamma_beta, lower = input$tail_gamma)
+      }
+      else if(input$gamma_alpha == 0 | input$gamma_beta == 0){
+        lab <- 0
+      }
+      else if(!is.finite(input$x_gamma_lower) & !is.finite(input$x_gamma_lower)){
+        lab <- 1
+      }
+    }
+    
+    text(x = input$gamma_alpha*input$gamma_beta,
+         y = max(crv_gamma$y)/2,
+         labels = round(lab, 4),
+         cex = 4)
+    
+  })
+  
+  output$gamma <- renderPrint({
+    
+    if(is.finite(input$x_gamma_lower) & is.finite(input$x_gamma_upper)){
+      lower <- input$x_gamma_lower
+      upper <- input$x_gamma_upper
+      pgamma(upper, shape = input$gamma_alpha, scale = input$gamma_beta) -
+        pgamma(lower, shape = input$gamma_alpha, scale = input$gamma_beta)
+    }
+    else{
+      if(is.finite(input$x_gamma_lower)){
+        lower <- input$x_gamma_lower
+        1 - pgamma(lower, shape = input$gamma_alpha, scale = input$gamma_beta, lower = input$tail_gamma == FALSE)
+      }
+      else if(is.finite(input$x_gamma_upper)){
+        upper <- input$x_gamma_upper
+        pgamma(upper, shape = input$gamma_alpha, scale = input$gamma_beta, lower = input$tail_gamma)
+      }
+      else if(!is.finite(input$x_gamma_lower) & !is.finite(input$x_gamma_lower)){
+        lower <- 0
+        upper <- qgamma(.999, shape = input$gamma_alpha, scale = input$gamma_beta)
+        pgamma(upper, shape = input$gamma_alpha, scale = input$gamma_beta, lower = input$tail_gamma) -
+          pgamma(lower, shape = input$gamma_alpha, scale = input$gamma_beta, lower = input$tail_gamma)
       }
     }
     
