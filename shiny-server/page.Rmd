@@ -1,0 +1,49 @@
+---
+title: "Servidor de aplicações Shiny do LEG"
+output_format: html_document
+---
+
+<!-- Este arquivo deve ficar em /etc/shiny-server/templates -->
+
+```{r, fig.align='center', echo=FALSE, out.width='30%'}
+fig <-
+    "https://raw.githubusercontent.com/walmes/Tikz/master/src/leg.png"
+knitr::include_graphics(fig)
+```
+
+Você está acessando o servidor de aplicações Shiny do
+[LEG](www.leg.ufpr.br) (Laboratório de Estatística e Geoinformação)
+mantido em colaboração e compartilhamento com acadêmicos do
+[PET](http://www.exatas.ufpr.br/portal/programa-de-educacao-tutorial-pet/)
+Estatística UFPR (Programa de Educação Tutorial). Nesse endereço, os
+usuários mantém suas aplicações em Shiny rodando.
+
+Abaixo segue uma lista de usuários que hospedam suas aplicações neste
+servidor. Clique no nome do usuário para ver a lista de aplicações
+específica de cada um:
+
+```{r, include=FALSE}
+## Para aparecer na lista, um usuario precisa ter a aplicação 'home' no
+## seu ShinyApps. Essa aplicação é a responsável por criar a lista com
+## as demais aplicações.
+users <- dir("/home")
+shome <- "/ShinyApps/home"
+dhome <- dir.exists(paste0("/home/", users, shome))
+uhome <- users[dhome]
+dir.exists(paste0("/home/", "fernandomayer", shome))
+nomes <- data.frame(
+    uname = uhome,
+    rname = c("Fernando Mayer",
+              "Walmes Zeviani")
+)
+url <- "http://shiny.leg.ufpr.br/"
+```
+
+```{r, echo=FALSE, results='asis'}
+cat(paste0("- [", nomes$rname,  "](", url, nomes$uname, ")\n"))
+```
+
+```{r, eval=FALSE, include=FALSE}
+render("page.Rmd", output_file = "error.html")
+render("page.Rmd", output_file = "directoryIndex.html")
+```
