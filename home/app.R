@@ -64,10 +64,11 @@ lapply(appdirs,
 #-----------------------------------------------------------------------
 # Define UI e SERVER.
 
-# Arquivos de customização.
-header <- "../GLOBAL/header.html"
-mathjax <- "../GLOBAL/MathJax.html"
-css <- "../GLOBAL/style.css"
+## Arquivos de customização.
+url <- "/home/shiny/GLOBAL/"
+header <- paste0(url, "header.html")
+mathjax <- paste0(url, "MathJax.html")
+css <- paste0(url, "style.css")
 
 ui <- shinyUI(
     fluidPage(
