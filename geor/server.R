@@ -22,8 +22,7 @@ shinyServer(function(input, output, session) {
                    type = "l", xlab = "", ylab = "", col = 1) +
                 as.layer(xyplot(y ~ x, col = 1, cex = get(i)))
         })
-    },
-    family = "Palatino")
+    })
 
     observe({
         L <- GETDATA()
@@ -103,8 +102,7 @@ shinyServer(function(input, output, session) {
             variofit = {
                 lines(fit, col = 2)
             })
-    },
-    family = "Palatino")
+    })
 
     KRG <- reactive({
         fit <- KRIGE()
@@ -158,7 +156,6 @@ shinyServer(function(input, output, session) {
                                      cex = eval(parse(text = i)))))
         }
         plot(p)
-    },
-    family = "Palatino")
+    })
 
 })

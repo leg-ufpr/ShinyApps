@@ -137,7 +137,7 @@ shinyServer(function(input, output) {
         }
 
     },
+    # family = "Palatino",
     width = 500,
-    height = 400,
-    family = "Palatino")
+    height = 400)
 })

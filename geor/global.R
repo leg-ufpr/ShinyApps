@@ -5,6 +5,7 @@ rm(list = ls())
 
 library(lattice)
 library(latticeExtra)
+library(RColorBrewer)
 library(sgeostat)
 library(geoR)
 

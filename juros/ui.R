@@ -2,8 +2,9 @@ library(shiny)
 
 shinyUI(
     fluidPage(
-        includeHTML("../GLOBAL/header.html"),
-        includeHTML("../GLOBAL/MathJax.html"),
+        class = "container",
+        # includeHTML("../GLOBAL/header.html"),
+        # includeHTML("../GLOBAL/MathJax.html"),
         includeCSS("../GLOBAL/style.css"),
         titlePanel("Simulação de Financiamento Imobiliário"),
         sidebarLayout(
@@ -54,7 +55,7 @@ shinyUI(
                             "amortização considerando os juros.")))
                 ) # tabsetPanel
             ) # mainPanel
-        ), # sidebarLayout
-        includeHTML("../GLOBAL/footer.html")
+        ) # sidebarLayout
+        # includeHTML("../GLOBAL/footer.html")
     ) # fluidPage
 ) # shiniUI

@@ -9,8 +9,8 @@ aju <- c("Visual" = "eyefitted",
          "Modelo não linear" = "variofit")
 
 shinyUI(fluidPage(
-    includeHTML("../GLOBAL/header.html"),
-    includeHTML("../GLOBAL/MathJax.html"),
+    # includeHTML("../GLOBAL/header.html"),
+    # includeHTML("../GLOBAL/MathJax.html"),
     includeCSS("../GLOBAL/style.css"),
     titlePanel("Geoestatística"),
     sidebarLayout(

@@ -1,5 +1,6 @@
 body, td, caption {
-    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    /* font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif; */
+    font-family: "DM Sans", "Helvetica", sans serif;
 }
 
 tt, code, pre {
